@@ -10,6 +10,72 @@
     </head>
 
     <body>
-        
+       <div class="container">
+           <div class="row">
+                <div class="col-12">
+                    <div class="jumbotron jumbotron-fluid" id="title">
+                        <div class="container">
+                            <h1 class="display-1">Track 'Dem Trains!!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container train-container">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="display-5 table-title-bar">Trains Being Tracked</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table" id="train-tracker-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Train Name</th>
+                                    <th scope="col">Destination</th>
+                                    <th scope="col">Frequency (Min)</th>
+                                    <th scope="col">Next Arrival</th>
+                                    <th scope="col">Minutes Away</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tracked-trains-here">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="container train-container">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="display-5 table-title-bar">Add Train!</h4>
+                    </div>
+                </div>
+                <form class="container-fluid">
+                    <div class="form-group">
+                        <label for="train-name-input">Train Name</label>
+                        <input type="text" class="form-control" id="train-name-input" placeholder="Fly Train">
+                    </div>
+                </form>
+                <form class="container-fluid">
+                    <div class="form-group">
+                        <label for="destination-input">Destination</label>
+                        <input type="text" class="form-control" id="destination-input" placeholder="Chicago">
+                    </div>
+                </form>
+                <form class="container-fluid">
+                    <div class="form-group">
+                        <label for="first-train-time-input">First Train Time (HH:mm Military Time)</label>
+                        <input type="text" class="form-control" id="first-train-time-input" placeholder="05:25">
+                    </div>
+                </form>
+                <form class="container-fluid">
+                    <div class="form-group">
+                        <label for="frequency-input">Train Arrival Frequency (minutes)</label>
+                        <input type="text" class="form-control" id="frequency-input" placeholder="15">
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-secondary" id="train-add-submit">Add Train</button>
+            </div>
+       </div> 
     </body>
 </html>
