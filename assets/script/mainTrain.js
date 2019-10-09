@@ -43,10 +43,28 @@ $("#train-add-submit").on("click", function() {
 database.ref().on("child_added", function(snapshot) {
     // Change the HTML to reflect
       var tableRow = $("<tr>");
+      calcTrainTimes = nextTrain(snapshot.val().first_train_time, snapshot.val().train_frequency);
       tableRow.append($("<td>").text(snapshot.val().train_name));
       tableRow.append($("<td>").text(snapshot.val().train_destination));
       tableRow.append($("<td>").text(snapshot.val().train_frequency));
-      //tableRow.append($("<td>").text(snapshot.val().monthlyRate));
-      //tableRow.append($("<td>").text(snapshot.val().dateAdded));
+      tableRow.append($("<td>").text(calcTrainTimes.next_train_time));
+      tableRow.append($("<td>").text(calcTrainTimes.next_train_minutes));
       $("#tracked-trains-here").append(tableRow);
   });
+
+function nextTrain(firstArrivalTime, trainArrivalFrequency) {
+    var firstArrival = moment(firstArrivalTime, "HH:mm").subtract(1, "years");
+    var differenceTime = moment().diff(moment(firstArrival), "minutes");
+    var tRemainder = differenceTime % trainArrivalFrequency;
+    var nextTrainMinutes = trainArrivalFrequency - tRemainder;
+    var nextTrain = moment().add(nextTrainMinutes, "minutes");
+    var nextTrainConvert = moment(nextTrain, "HH:mm");
+    console.log(nextTrainConvert);
+
+    var trainTimes = {
+        next_train_minutes: nextTrainMinutes,
+        next_train_time: nextTrainConvert
+    }
+
+    return trainTimes;
+}
