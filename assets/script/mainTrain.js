@@ -5,7 +5,7 @@ var trainFrequency = 0;
 
 
 // Your web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyAWo-zRrW8mwCFvsKDHjRl6dFthdzSXmw0",
     authDomain: "trainproject-e73e5.firebaseapp.com",
     databaseURL: "https://trainproject-e73e5.firebaseio.com",
@@ -13,7 +13,7 @@ var firebaseConfig = {
     storageBucket: "trainproject-e73e5.appspot.com",
     messagingSenderId: "113777723656",
     appId: "1:113777723656:web:3fa021a84d206d150944bd"
-};
+  };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -32,5 +32,21 @@ $("#train-add-submit").on("click", function() {
     console.log(firstTrainTime);
     console.log(trainFrequency);
 
-    
+    database.ref().push( {
+        train_name: trainName,
+        train_destination: trainDestination,
+        first_train_time: firstTrainTime,
+        train_frequency: trainFrequency
+    })
 })
+
+database.ref().on("child_added", function(snapshot) {
+    // Change the HTML to reflect
+      var tableRow = $("<tr>");
+      tableRow.append($("<td>").text(snapshot.val().train_name));
+      tableRow.append($("<td>").text(snapshot.val().train_destination));
+      tableRow.append($("<td>").text(snapshot.val().train_frequency));
+      //tableRow.append($("<td>").text(snapshot.val().monthlyRate));
+      //tableRow.append($("<td>").text(snapshot.val().dateAdded));
+      $("#tracked-trains-here").append(tableRow);
+  });
