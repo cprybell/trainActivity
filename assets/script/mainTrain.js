@@ -3,7 +3,6 @@ var trainDestination = "";
 var firstTrainTime = "00:00"
 var trainFrequency = 0;
 
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAWo-zRrW8mwCFvsKDHjRl6dFthdzSXmw0",
@@ -27,21 +26,42 @@ $("#train-add-submit").on("click", function() {
     firstTrainTime = $("#first-train-time-input").val().trim();
     trainFrequency = $("#frequency-input").val().trim();
 
-    console.log(trainName);
-    console.log(trainDestination);
-    console.log(firstTrainTime);
-    console.log(trainFrequency);
+    trainNameValid = validInput("train-name-input", trainName);
+    trainDestinationValid = validInput("destination-input", trainDestination);
+    firstTrainTimeValid = validInput("first-train-time-input", firstTrainTime);
+    trainFrequencyValid = validInput("frequency-input", trainFrequency);
 
-    database.ref().push( {
-        train_name: trainName,
-        train_destination: trainDestination,
-        first_train_time: firstTrainTime,
-        train_frequency: trainFrequency
-    })
-    $(".trainForm")[0].reset();
-    $(".trainForm")[1].reset();
-    $(".trainForm")[2].reset();
-    $(".trainForm")[3].reset();
+    if (trainNameValid.valid && trainDestinationValid.valid && firstTrainTimeValid.valid && trainFrequencyValid.valid) {
+        database.ref().push( {
+            train_name: trainName,
+            train_destination: trainDestination,
+            first_train_time: firstTrainTime,
+            train_frequency: trainFrequency
+        })
+
+        $(".trainForm")[0].reset();
+        $(".trainForm")[1].reset();
+        $(".trainForm")[2].reset();
+        $(".trainForm")[3].reset();
+    }
+    else {
+        if (!trainNameValid.valid) {
+            console.log(trainNameValid.errorMessage);
+
+        }
+        if (!trainDestinationValid.valid) {
+            console.log(trainDestinationValid.errorMessage);
+
+        }
+        if (!firstTrainTimeValid.valid) {
+            console.log(firstTrainTimeValid.errorMessage);
+
+        }
+        if (!trainFrequencyValid.valid) {
+            console.log(trainFrequencyValid.errorMessage);
+
+        }
+    }
 })
 
 database.ref().on("child_added", function(snapshot) {
@@ -54,7 +74,7 @@ database.ref().on("child_added", function(snapshot) {
       tableRow.append($("<td>").text(calcTrainTimes.next_train_time));
       tableRow.append($("<td>").text(calcTrainTimes.next_train_minutes));
       $("#tracked-trains-here").append(tableRow);
-  });
+});
 
 function nextTrain(firstArrivalTime, trainArrivalFrequency) {
     var firstArrival = moment(firstArrivalTime, "HH:mm").subtract(1, "years");
@@ -63,7 +83,6 @@ function nextTrain(firstArrivalTime, trainArrivalFrequency) {
     var nextTrainMinutes = trainArrivalFrequency - tRemainder;
     var nextTrain = moment().add(nextTrainMinutes, "minutes");
     var nextTrainConvert = moment(nextTrain).format("HH:mm");
-    //console.log(nextTrainConvert);
 
     var trainTimes = {
         next_train_minutes: nextTrainMinutes,
