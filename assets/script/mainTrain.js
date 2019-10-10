@@ -47,19 +47,19 @@ $("#train-add-submit").on("click", function() {
     else {
         if (!trainNameValid.valid) {
             console.log(trainNameValid.errorMessage);
-
+            alert(trainNameValid.errorMessage);
         }
         if (!trainDestinationValid.valid) {
             console.log(trainDestinationValid.errorMessage);
-
+            alert(trainDestinationValid.errorMessage);
         }
         if (!firstTrainTimeValid.valid) {
             console.log(firstTrainTimeValid.errorMessage);
-
+            alert(firstTrainTimeValid.errorMessage);
         }
         if (!trainFrequencyValid.valid) {
             console.log(trainFrequencyValid.errorMessage);
-
+            alert(trainFrequencyValid.errorMessage);
         }
     }
 })
