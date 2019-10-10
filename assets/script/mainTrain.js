@@ -38,6 +38,7 @@ $("#train-add-submit").on("click", function() {
         first_train_time: firstTrainTime,
         train_frequency: trainFrequency
     })
+    $(".trainForm")[0].reset();
 })
 
 database.ref().on("child_added", function(snapshot) {
@@ -58,8 +59,8 @@ function nextTrain(firstArrivalTime, trainArrivalFrequency) {
     var tRemainder = differenceTime % trainArrivalFrequency;
     var nextTrainMinutes = trainArrivalFrequency - tRemainder;
     var nextTrain = moment().add(nextTrainMinutes, "minutes");
-    var nextTrainConvert = moment(nextTrain, "HH:mm");
-    console.log(nextTrainConvert);
+    var nextTrainConvert = moment(nextTrain).format("HH:mm");
+    //console.log(nextTrainConvert);
 
     var trainTimes = {
         next_train_minutes: nextTrainMinutes,
