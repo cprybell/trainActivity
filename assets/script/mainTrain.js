@@ -39,6 +39,9 @@ $("#train-add-submit").on("click", function() {
         train_frequency: trainFrequency
     })
     $(".trainForm")[0].reset();
+    $(".trainForm")[1].reset();
+    $(".trainForm")[2].reset();
+    $(".trainForm")[3].reset();
 })
 
 database.ref().on("child_added", function(snapshot) {
